@@ -1,0 +1,21 @@
+use("platzi_store")
+
+db.orders.find({ user_id: ObjectId("66983c39ebc239b714520d2f")}).count()
+db.orders.find({ user_id: ObjectId("669835e282769ba4df689515")})
+db.users.findOne({ _id: ObjectId("66983c39ebc239b714520d2f")})
+
+db.orders.aggregate([
+  {
+    $match: {
+      _id: ObjectId("66983c39ebc239b714520d2f")
+    }
+  },
+  {
+    $lookup: {
+      from: "users",
+      localField: "user_id",
+      foreignField: "_id",
+      as: "user"
+    }
+  }
+])
